@@ -24,7 +24,19 @@
   color: white;
 }
 
-ul {
+.articles-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+.articles-list-item {
+  border: solid;
+  width: 50vh;
+  margin: 10px;
+}
+
+.nav-list {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 100%;

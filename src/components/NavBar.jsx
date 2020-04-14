@@ -14,9 +14,7 @@ export class NavBar extends Component {
 
   fetchTopics = () => {
     api.getTopics().then((topics) => {
-      this.setState({ topics, isLoading: false }, () => {
-        console.log(this.state.topics);
-      });
+      this.setState({ topics, isLoading: false });
     });
   };
 
@@ -24,7 +22,7 @@ export class NavBar extends Component {
     const { topics } = this.state;
     return (
       <nav>
-        <ul>
+        <ul className="nav-list">
           {topics.map((topic, index) => {
             return (
               <Link

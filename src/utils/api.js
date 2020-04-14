@@ -9,3 +9,19 @@ export const getTopics = () => {
     return data.topics;
   });
 };
+
+export const getArticles = (query) => {
+  return request
+    .get('/articles', {
+      params: {
+        sort_by: query.sort_by,
+        limit: query.limit,
+        p: query.p,
+        author: query.author,
+        topic: query.topic,
+      },
+    })
+    .then(({ data }) => {
+      return data.articles;
+    });
+};
