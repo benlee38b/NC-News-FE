@@ -26,7 +26,7 @@ export class NavBar extends Component {
           {topics.map((topic, index) => {
             return (
               <Link
-                to={`/${topic.slug}/articles`}
+                to={`/topics/${topic.slug}`}
                 key={topic.slug + index}
                 className="nav-links"
               >

@@ -24,6 +24,10 @@
   color: white;
 }
 
+.topic-title {
+  font-size: 6vh;
+}
+
 .articles-list {
   display: flex;
   flex-wrap: wrap;

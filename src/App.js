@@ -3,8 +3,7 @@ import './App.css';
 import { Header } from './components/Header';
 import NavBar from './components/NavBar';
 import { Router } from '@reach/router';
-import ArticleList from './components/ArticleList';
-import ArticleListByTopic from './components/ArticleListByTopic';
+import ArticleList from './components/ArticleList.jsx';
 
 function App() {
   return (
@@ -12,7 +11,7 @@ function App() {
       <Header />
       <NavBar />
       <Router>
-        <ArticleListByTopic path="/:topic_slug/articles" />
+        <ArticleList path="/topics/:topic_slug" />
         <ArticleList path="/articles/*" />
       </Router>
     </div>
