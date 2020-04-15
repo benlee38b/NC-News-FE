@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api';
-import { formatDate } from '../utils/formatDate';
+import Voter from './Voter';
+// import { formatDate } from '../utils/formatDate';
 
 export class SingleArticle extends Component {
   state = {
@@ -10,13 +11,10 @@ export class SingleArticle extends Component {
 
   componentDidMount() {
     this.fetchArticle();
-    formatDate(this.state.article.created_at);
   }
   fetchArticle = () => {
     api.getArticleById(this.props.article_id).then((article) => {
-      this.setState({ article, isLoading: false }, () => {
-        console.log(article);
-      });
+      this.setState({ article, isLoading: false });
     });
   };
 
@@ -27,6 +25,7 @@ export class SingleArticle extends Component {
       author,
       created_at,
       votes,
+      article_id,
       // comment_count,
     } = this.state.article;
 
@@ -36,7 +35,9 @@ export class SingleArticle extends Component {
         <h4>
           written by{author} on {created_at}
         </h4>
-        <h5>Total votes: {votes}</h5>
+        <h5>
+          <Voter votes={votes} type={'articles'} article_id={article_id} />
+        </h5>
         <p>{body}</p>
       </main>
     );

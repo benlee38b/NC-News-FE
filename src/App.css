@@ -65,7 +65,7 @@
 .single-article-container {
   display: flex;
   flex-direction: column;
-  max-width: 150vh;
+  max-width: 120vh;
   height: auto;
   margin: auto;
 }

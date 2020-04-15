@@ -32,3 +32,14 @@ export const getArticleById = (article_id) => {
     return data.article;
   });
 };
+
+export const patchVotes = (props, votes) => {
+  return request
+    .patch(`/${props.type}/${props.article_id || props.comment_id}`, {
+      inc_votes: votes,
+    })
+    .then(({ data }) => {
+      console.log(data);
+      return data;
+    });
+};

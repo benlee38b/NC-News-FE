@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
+import * as api from '../utils/api';
 
-const Voter = ({ votes }) => {
-  return (
-    <section>
-      <button></button>
-      <p></p>
-      <button></button>
-    </section>
-  );
-};
+export class Voter extends Component {
+  state = { voteChange: 0 };
+
+  render() {
+    const { voteChange } = this.state;
+    return (
+      <section>
+        <button
+          onClick={() => {
+            this.handleClick(1);
+          }}
+          disabled={voteChange > 0}
+        >
+          Up
+        </button>
+        <p>Total votes: {this.props.votes + voteChange}</p>
+        <button
+          onClick={() => {
+            this.handleClick(-1);
+          }}
+          disabled={voteChange < 0}
+        >
+          Down
+        </button>
+      </section>
+    );
+  }
+
+  handleClick = (votes) => {
+    api.patchVotes(this.props, votes);
+    this.setState((currentState) => {
+      return { voteChange: currentState.voteChange + votes };
+    });
+  };
+}
 
 export default Voter;
