@@ -39,7 +39,12 @@ export const patchVotes = (props, votes) => {
       inc_votes: votes,
     })
     .then(({ data }) => {
-      console.log(data);
       return data;
     });
+};
+
+export const getCommentsByArticleId = (article_id) => {
+  return request.get(`articles/${article_id}/comments`).then(({ data }) => {
+    return data.comments.data;
+  });
 };

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../utils/api';
 import { Link } from '@reach/router';
 import Voter from './Voter';
+import FilterArticleListForm from './FilterArticleListForm';
 
 export class ArticleList extends Component {
   state = {
@@ -22,6 +23,7 @@ export class ArticleList extends Component {
         <h2 className="topic-title">
           {this.props.topic_slug || 'All Articles'}
         </h2>
+        <FilterArticleListForm />
         <ul className="articles-list">
           {articles.map((article) => {
             return (

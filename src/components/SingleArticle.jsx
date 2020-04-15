@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api';
 import Voter from './Voter';
+import CommentsList from './CommentsList';
 // import { formatDate } from '../utils/formatDate';
 
 export class SingleArticle extends Component {
@@ -40,20 +41,22 @@ export class SingleArticle extends Component {
       article_id,
       // comment_count,
     } = this.state.article;
-    return (
-      <>
+    // isLoading
+    return this.state.isLoading ? (
+      <p>Loading....</p>
+    ) : (
+      <main className="single-article-container">
         {this.state.homepage ? <h2>Please enjoy this random article</h2> : null}
-        <main className="single-article-container">
-          <h2>{title}</h2>
-          <h4>
-            written by{author} on {created_at}
-          </h4>
-          <h5>
-            <Voter votes={votes} type={'articles'} article_id={article_id} />
-          </h5>
-          <p>{body}</p>
-        </main>
-      </>
+        <h2>{title}</h2>
+        <h4>
+          written by{author} on {created_at}
+        </h4>
+        <h5>
+          <Voter votes={votes} type={'articles'} article_id={article_id} />
+        </h5>
+        <p>{body}</p>
+        <CommentsList article_id={article_id} />
+      </main>
     );
   }
 }
