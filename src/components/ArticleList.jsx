@@ -30,7 +30,6 @@ export class ArticleList extends Component {
                   <Link to={`/articles/${article.article_id}`}>
                     <li>
                       <h3>{article.title}</h3>
-                      <p>{article.article_id}</p>
                       <h5>Written By {article.author}</h5>
                     </li>
                   </Link>

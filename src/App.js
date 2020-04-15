@@ -17,6 +17,7 @@ function App() {
         <ArticleList path="/topics/:topic_slug" />
         <ArticleList path="/articles" />
         <SingleArticle path="/articles/:article_id" />
+        <SingleArticle path="/" />
       </Router>
     </div>
   );
