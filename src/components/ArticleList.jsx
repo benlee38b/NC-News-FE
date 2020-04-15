@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api';
+import { Link } from '@reach/router';
 
 export class ArticleList extends Component {
   state = {
@@ -23,11 +24,17 @@ export class ArticleList extends Component {
         <ul className="articles-list">
           {articles.map((article) => {
             return (
-              <li key={article.article_id} className="articles-list-item">
-                <h3>{article.title}</h3>
-                <p>{article.article_id}</p>
-                <h5>Written By {article.author}</h5>
-              </li>
+              <Link
+                className="articles-list-item"
+                to={`/articles/${article.article_id}`}
+                key={article.article_id}
+              >
+                <li>
+                  <h3>{article.title}</h3>
+                  <p>{article.article_id}</p>
+                  <h5>Written By {article.author}</h5>
+                </li>
+              </Link>
             );
           })}
         </ul>
