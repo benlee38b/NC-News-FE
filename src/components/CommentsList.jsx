@@ -12,6 +12,7 @@ export class CommentsList extends Component {
   }
 
   fetchComments = () => {
+    console.log(this.props.user);
     api.getCommentsByArticleId(this.props.article_id).then((comments) => {
       this.setState({ comments, isLoading: false });
     });
@@ -30,6 +31,11 @@ export class CommentsList extends Component {
                 <span>{comment.author} on </span>
                 {comment.created_at}
               </h3>
+              {this.props.user === comment.author ? (
+                <button onClick={() => this.handleDelete(comment.comment_id)}>
+                  Delete Comment
+                </button>
+              ) : null}
               <h4>Total votes: {comment.votes}</h4>
               <p>{comment.body}</p>
             </li>
@@ -38,6 +44,12 @@ export class CommentsList extends Component {
       </ul>
     );
   }
+
+  handleDelete = (comment_id) => {
+    api.deleteCommentByCommentId(comment_id).then(() => {
+      this.fetchComments(this.props.article_id);
+    });
+  };
 }
 
 export default CommentsList;

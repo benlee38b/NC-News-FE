@@ -55,7 +55,7 @@ export class SingleArticle extends Component {
           <Voter votes={votes} type={'articles'} article_id={article_id} />
         </h5>
         <p>{body}</p>
-        <CommentsList article_id={article_id} />
+        <CommentsList article_id={article_id} user={this.props.user} />
       </main>
     );
   }

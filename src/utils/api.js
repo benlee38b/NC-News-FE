@@ -48,3 +48,7 @@ export const getCommentsByArticleId = (article_id) => {
     return data.comments.data;
   });
 };
+
+export const deleteCommentByCommentId = (comment_id) => {
+  return request.delete(`comments/${comment_id}`);
+};

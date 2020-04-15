@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import { Header } from './components/Header';
 import NavBar from './components/NavBar';
@@ -7,20 +6,28 @@ import ArticleList from './components/ArticleList.jsx';
 import { HomeButton } from './components/HomeButton';
 import SingleArticle from './components/SingleArticle';
 
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <HomeButton />
-      <NavBar />
-      <Router>
-        <ArticleList path="/topics/:topic_slug" />
-        <ArticleList path="/articles" />
-        <SingleArticle path="/articles/:article_id" />
-        <SingleArticle path="/" />
-      </Router>
-    </div>
-  );
+import React, { Component } from 'react';
+
+export class App extends Component {
+  state = {
+    user: 'jessjelly',
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <HomeButton />
+        <NavBar />
+        <Router>
+          <ArticleList path="/topics/:topic_slug" />
+          <ArticleList path="/articles" />
+          <SingleArticle path="/articles/:article_id" user={this.state.user} />
+          <SingleArticle path="/" user={this.state.user} />
+        </Router>
+      </div>
+    );
+  }
 }
 
 export default App;
