@@ -23,26 +23,26 @@ export class ArticleList extends Component {
         <h2 className="topic-title">
           {this.props.topic_slug || 'All Articles'}
         </h2>
-        <FilterArticleListForm />
+        <FilterArticleListForm
+          handleFilteredArticles={this.handleFilteredArticles}
+        />
         <ul className="articles-list">
           {articles.map((article) => {
             return (
               <section className="articles-list-item" key={article.article_id}>
-                <div>
-                  <Link to={`/articles/${article.article_id}`}>
-                    <li>
-                      <h3>{article.title}</h3>
-                      <h5>Written By {article.author}</h5>
-                    </li>
-                  </Link>
-                </div>
-                <div>
-                  <Voter
-                    type={'articles'}
-                    votes={article.votes}
-                    article_id={article.article_id}
-                  />
-                </div>
+                <Link to={`/articles/${article.article_id}`}>
+                  <li>
+                    <h3>{article.title}</h3>
+                    <h5>Written By {article.author}</h5>
+                    <h6>Published on {article.created_at}</h6>
+                  </li>
+                </Link>
+
+                <Voter
+                  type={'articles'}
+                  votes={article.votes}
+                  article_id={article.article_id}
+                />
               </section>
             );
           })}
@@ -60,6 +60,13 @@ export class ArticleList extends Component {
           console.log(this.state.articles);
         });
       });
+  };
+  handleFilteredArticles = (query) => {
+    api.getArticles(query).then((articles) => {
+      this.setState({ articles }, () => {
+        console.log(this.state);
+      });
+    });
   };
 
   componentDidMount() {

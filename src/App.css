@@ -38,8 +38,12 @@
 }
 
 .articles-list-item {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   border: solid;
   width: 50vh;
+  min-height: 19vw;
   margin: 10px;
 }
 
@@ -95,11 +99,15 @@
 .pages {
   padding: 10px;
 }
+.voter-container {
+  display: block;
+  border: solid;
+}
 
 .voter {
   display: flex;
-  justify-content: center;
   padding: 1vh;
+  justify-content: center;
 }
 
 .home-button {
