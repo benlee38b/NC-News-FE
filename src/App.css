@@ -79,6 +79,12 @@
   padding: 10px;
 }
 
+.voter {
+  display: flex;
+  justify-content: center;
+  padding: 2vh;
+}
+
 .home-button {
   border-radius: 50%;
 }

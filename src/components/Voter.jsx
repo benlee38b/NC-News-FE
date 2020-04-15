@@ -7,7 +7,7 @@ export class Voter extends Component {
   render() {
     const { voteChange } = this.state;
     return (
-      <section>
+      <section className="voter">
         <button
           onClick={() => {
             this.handleClick(1);
