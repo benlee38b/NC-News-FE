@@ -24,16 +24,14 @@ export class AddCommentForm extends Component {
 
   handleChange = (event) => {
     const comment = event.target.value;
-    this.setState({ body: comment }, () => {
-      console.log(this.state.body);
-    });
+    this.setState({ body: comment });
   };
   handleSubmit = (event) => {
     event.preventDefault();
     api
       .postCommentByArticleId(this.props, this.state.body)
       .then(() => {
-        this.props.fetchArticle();
+        this.props.fetchComments();
       })
       .catch((err) => {
         console.dir(err);

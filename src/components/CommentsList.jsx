@@ -3,6 +3,7 @@ import * as api from '../utils/api';
 import Voter from './Voter';
 import { Loader } from './Loader';
 import { ErrorDisplay } from './ErrorDisplay';
+import AddCommentForm from './AddCommentForm';
 
 export class CommentsList extends Component {
   state = {
@@ -16,7 +17,6 @@ export class CommentsList extends Component {
   }
 
   fetchComments = () => {
-    console.log(this.props.user);
     api
       .getCommentsByArticleId(this.props.article_id)
       .then((comments) => {
@@ -47,29 +47,36 @@ export class CommentsList extends Component {
     return this.state.isLoading ? (
       <Loader />
     ) : (
-      <ul className="comment-list">
-        {comments.map((comment) => {
-          return (
-            <li key={comment.comment_id} className="comment-list-item">
-              <h3>
-                <span>{comment.author} on </span>
-                {comment.created_at}
-              </h3>
-              {this.props.user === comment.author ? (
-                <button onClick={() => this.handleDelete(comment.comment_id)}>
-                  Delete Comment
-                </button>
-              ) : null}
-              <Voter
-                votes={comment.votes}
-                type={'comments'}
-                comment_id={comment.comment_id}
-              />
-              <p>{comment.body}</p>
-            </li>
-          );
-        })}
-      </ul>
+      <>
+        <AddCommentForm
+          article_id={this.props.article_id}
+          user={this.props.user}
+          fetchComments={this.fetchComments}
+        />
+        <ul className="comment-list">
+          {comments.map((comment) => {
+            return (
+              <li key={comment.comment_id} className="comment-list-item">
+                <h3>
+                  <span>{comment.author} on </span>
+                  {comment.created_at}
+                </h3>
+                {this.props.user === comment.author ? (
+                  <button onClick={() => this.handleDelete(comment.comment_id)}>
+                    Delete Comment
+                  </button>
+                ) : null}
+                <Voter
+                  votes={comment.votes}
+                  type={'comments'}
+                  comment_id={comment.comment_id}
+                />
+                <p>{comment.body}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </>
     );
   }
 

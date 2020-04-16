@@ -4,7 +4,7 @@ import { Link } from '@reach/router';
 export const HomeButton = () => {
   return (
     <Link to="/" className="home-button">
-      <i class="fas fa-home"></i>
+      <i className="fas fa-home"></i>
     </Link>
   );
 };
