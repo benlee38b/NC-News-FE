@@ -8,11 +8,12 @@ export class AddCommentForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form id="add-comment-form" onSubmit={this.handleSubmit}>
         <label htmlFor="new-comment">
+          Add a new comment:
           <textarea
             id="new-comment"
-            rows="5"
+            rows="4"
             cols="50"
             onChange={this.handleChange}
           />

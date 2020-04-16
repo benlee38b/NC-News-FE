@@ -9,21 +9,23 @@ export class Voter extends Component {
     return (
       <section className="voter">
         <button
+          id="up-voting-button"
           onClick={() => {
             this.handleClick(1);
           }}
           disabled={voteChange > 0}
         >
-          Up
+          <i id="up-voting-icon" className="far fa-arrow-alt-circle-up"></i>
         </button>
         <p>Total votes: {this.props.votes + voteChange}</p>
         <button
+          id="down-voting-button"
           onClick={() => {
             this.handleClick(-1);
           }}
           disabled={voteChange < 0}
         >
-          Down
+          <i id="down-voting-icon" className="far fa-arrow-alt-circle-down"></i>
         </button>
       </section>
     );
