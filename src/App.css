@@ -99,6 +99,21 @@
 .pages {
   padding: 10px;
 }
+
+.comment-list {
+  display: flex;
+  max-width: 150vh;
+  margin: auto;
+  flex-direction: column;
+}
+.comment-list-item {
+  border: solid;
+  margin: 5vh;
+  padding: 10px;
+  max-width: 60%;
+  border-radius: 20%;
+}
+
 .voter-container {
   display: block;
   border: solid;

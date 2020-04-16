@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import * as api from '../utils/api';
+import { ErrorDisplay } from './ErrorDisplay';
 
 export class NavBar extends Component {
   state = {
@@ -13,12 +14,32 @@ export class NavBar extends Component {
   }
 
   fetchTopics = () => {
-    api.getTopics().then((topics) => {
-      this.setState({ topics, isLoading: false });
-    });
+    api
+      .getTopics()
+      .then((topics) => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch((err) => {
+        console.dir(err);
+        this.setState({
+          error: {
+            status: err.response.status,
+            msg: err.response.data.message,
+          },
+          isLoading: false,
+        });
+      });
   };
 
   render() {
+    if (this.state.error) {
+      return (
+        <ErrorDisplay
+          status={this.state.error.status}
+          msg={this.state.error.message}
+        />
+      );
+    }
     const { topics } = this.state;
     return (
       <nav>

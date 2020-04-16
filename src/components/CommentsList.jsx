@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api';
+import Voter from './Voter';
 
 export class CommentsList extends Component {
   state = {
@@ -13,9 +14,21 @@ export class CommentsList extends Component {
 
   fetchComments = () => {
     console.log(this.props.user);
-    api.getCommentsByArticleId(this.props.article_id).then((comments) => {
-      this.setState({ comments, isLoading: false });
-    });
+    api
+      .getCommentsByArticleId(this.props.article_id)
+      .then((comments) => {
+        this.setState({ comments, isLoading: false });
+      })
+      .catch((err) => {
+        console.dir(err);
+        this.setState({
+          error: {
+            status: err.response.status,
+            msg: err.response.data.message,
+          },
+          isLoading: false,
+        });
+      });
   };
 
   render() {
@@ -36,7 +49,11 @@ export class CommentsList extends Component {
                   Delete Comment
                 </button>
               ) : null}
-              <h4>Total votes: {comment.votes}</h4>
+              <Voter
+                votes={comment.votes}
+                type={'comments'}
+                comment_id={comment.comment_id}
+              />
               <p>{comment.body}</p>
             </li>
           );
@@ -46,9 +63,21 @@ export class CommentsList extends Component {
   }
 
   handleDelete = (comment_id) => {
-    api.deleteCommentByCommentId(comment_id).then(() => {
-      this.fetchComments(this.props.article_id);
-    });
+    api
+      .deleteCommentByCommentId(comment_id)
+      .then(() => {
+        this.fetchComments(this.props.article_id);
+      })
+      .catch((err) => {
+        console.dir(err);
+        this.setState({
+          error: {
+            status: err.response.status,
+            msg: err.response.data.message,
+          },
+          isLoading: false,
+        });
+      });
   };
 }
 

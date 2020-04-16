@@ -29,12 +29,6 @@ export class FilterArticleListForm extends Component {
     let queryObj = {};
     queryObj[event.target.name] = event.target.value;
     console.log(event.target.name);
-    // for (let key in queryObj) {
-    //   if (queryObj[key] === '') {
-    //     delete queryObj[key];
-    //     console.log(queryObj);
-    //   }
-    // }
     this.setState(
       (currentState) => {
         return { query: { ...currentState.query, ...queryObj } };

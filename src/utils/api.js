@@ -15,6 +15,7 @@ export const getArticles = (query) => {
     .get('/articles', {
       params: {
         sort_by: query.sort_by,
+        order: query.order,
         limit: query.limit,
         p: query.p,
         author: query.author,
@@ -22,7 +23,6 @@ export const getArticles = (query) => {
       },
     })
     .then(({ data }) => {
-      console.log(data);
       return data.articles;
     });
 };
@@ -34,11 +34,13 @@ export const getArticleById = (article_id) => {
 };
 
 export const patchVotes = (props, votes) => {
+  console.log(props, votes);
   return request
     .patch(`/${props.type}/${props.article_id || props.comment_id}`, {
       inc_votes: votes,
     })
     .then(({ data }) => {
+      console.log(data);
       return data;
     });
 };

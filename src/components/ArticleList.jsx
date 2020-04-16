@@ -3,6 +3,7 @@ import * as api from '../utils/api';
 import { Link } from '@reach/router';
 import Voter from './Voter';
 import FilterArticleListForm from './FilterArticleListForm';
+import { ErrorDisplay } from './ErrorDisplay';
 
 export class ArticleList extends Component {
   state = {
@@ -17,6 +18,14 @@ export class ArticleList extends Component {
     }
   }
   render() {
+    if (this.state.error) {
+      return (
+        <ErrorDisplay
+          status={this.state.error.status}
+          msg={this.state.error.message}
+        />
+      );
+    }
     const { articles } = this.state;
     return (
       <main>
@@ -33,8 +42,9 @@ export class ArticleList extends Component {
                 <Link to={`/articles/${article.article_id}`}>
                   <li>
                     <h3>{article.title}</h3>
-                    <h5>Written By {article.author}</h5>
-                    <h6>Published on {article.created_at}</h6>
+                    <h4>Written By {article.author}</h4>
+                    <h5>Published on {article.created_at}</h5>
+                    <h5>Comment count: {article.comment_count}</h5>
                   </li>
                 </Link>
 
@@ -56,17 +66,55 @@ export class ArticleList extends Component {
     api
       .getArticles({ topic: topic_slug } || this.state.queryObj)
       .then((articles) => {
-        this.setState({ articles, isLoading: false }, () => {
-          console.log(this.state.articles);
+        this.setState({ articles, isLoading: false });
+      })
+      .catch((err) => {
+        console.dir(err);
+        this.setState({
+          error: {
+            status: err.response.status,
+            msg: err.response.data.message,
+          },
+          isLoading: false,
         });
       });
   };
   handleFilteredArticles = (query) => {
-    api.getArticles(query).then((articles) => {
-      this.setState({ articles }, () => {
-        console.log(this.state);
-      });
-    });
+    if (this.props.topic_slug) {
+      query.topic = this.props.topic_slug;
+      console.log(query);
+      api
+        .getArticles(query)
+        .then((articles) => {
+          this.setState({ articles });
+        })
+        .catch((err) => {
+          console.dir(err);
+          this.setState({
+            error: {
+              status: err.response.status,
+              msg: err.response.data.message,
+            },
+            isLoading: false,
+          });
+        });
+    } else {
+      api
+        .getArticles(query)
+        .then((articles) => {
+          this.setState({ articles });
+        })
+        .catch((err) => {
+          console.dir(err);
+          this.setState({
+            error: {
+              status: err.response.status,
+              msg: err.response.data.message,
+            },
+            isLoading: false,
+          });
+        });
+    }
   };
 
   componentDidMount() {
