@@ -14,6 +14,7 @@
 }
 ul {
   padding: 0px;
+  margin-left: 0px;
 }
 
 .articles-list {
@@ -38,6 +39,7 @@ ul {
 .articles-list {
   display: flex;
   flex-wrap: wrap;
+
   max-width: 300vw; /*potentially dont need */
   margin: auto; /*potentially dont need */
   justify-content: center;
@@ -54,23 +56,33 @@ ul {
   margin: 10px;
 }
 
+i {
+  font-size: 8vh;
+  background-color: lightcoral;
+}
+
 .nav-list {
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 100%;
-  justify-content: space-evenly;
-  align-items: stretch;
+  display: flex;
+  background-color: lightcoral;
+  justify-content: flex-start;
+  align-items: center;
   border: solid;
-  height: 15svh;
+
+  height: 8vh;
+}
+
+li {
+  padding: 0px 10px 0px 10px;
 }
 .nav-links {
-  /* margin: 5px; */
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
   list-style-type: none;
   border-right: solid;
   height: 100%;
+
   text-align: center;
   text-decoration: none;
   font-size: 7vh;
@@ -133,7 +145,7 @@ ul {
 }
 
 .home-button {
-  border-radius: 50%;
+  padding: 0%;
 }
 
 .nav-links:hover {

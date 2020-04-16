@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import * as api from '../utils/api';
 import { ErrorDisplay } from './ErrorDisplay';
+import { HomeButton } from './HomeButton';
 
 export class NavBar extends Component {
   state = {
@@ -44,6 +45,7 @@ export class NavBar extends Component {
     return (
       <nav>
         <ul className="nav-list">
+          <HomeButton />
           {topics.map((topic, index) => {
             return (
               <Link
