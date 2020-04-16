@@ -54,3 +54,16 @@ export const getCommentsByArticleId = (article_id) => {
 export const deleteCommentByCommentId = (comment_id) => {
   return request.delete(`comments/${comment_id}`);
 };
+
+export const postCommentByArticleId = (props, body) => {
+  console.log(props.user);
+  console.log(body);
+  return request
+    .post(`articles/${props.article_id}/comments`, {
+      body: body,
+      username: props.user,
+    })
+    .then(({ data }) => {
+      console.log(data);
+    });
+};

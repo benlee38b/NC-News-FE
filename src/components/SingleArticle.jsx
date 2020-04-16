@@ -3,6 +3,7 @@ import * as api from '../utils/api';
 import Voter from './Voter';
 import CommentsList from './CommentsList';
 import { ErrorDisplay } from './ErrorDisplay';
+import AddCommentForm from './AddCommentForm';
 // import { formatDate } from '../utils/formatDate';
 
 export class SingleArticle extends Component {
@@ -94,6 +95,11 @@ export class SingleArticle extends Component {
           <p>{body}</p>
         </main>
         <section className="comments-container">
+          <AddCommentForm
+            article_id={article_id}
+            user={this.props.user}
+            fetchArticle={this.fetchArticle}
+          />
           <CommentsList article_id={article_id} user={this.props.user} />
         </section>
       </>

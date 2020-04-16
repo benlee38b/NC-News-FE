@@ -28,7 +28,7 @@ export class ArticleList extends Component {
     }
     const { articles } = this.state;
     return (
-      <main>
+      <main className="articles-list">
         <h2 className="topic-title">
           {this.props.topic_slug || 'All Articles'}
         </h2>
