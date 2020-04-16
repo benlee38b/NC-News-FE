@@ -58,7 +58,10 @@ ul {
 
 i {
   font-size: 8vh;
-  background-color: lightcoral;
+}
+
+#wizard-hat {
+  background-color: none;
 }
 
 .nav-list {

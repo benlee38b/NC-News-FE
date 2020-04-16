@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api';
 import Voter from './Voter';
+import { Loader } from './Loader';
+import { ErrorDisplay } from './ErrorDisplay';
 
 export class CommentsList extends Component {
   state = {
     comments: [],
     isLoading: true,
+    error: null,
   };
 
   componentDidMount() {
@@ -32,12 +35,20 @@ export class CommentsList extends Component {
   };
 
   render() {
-    // const { comments } = this.state;
+    const { comments, error } = this.state;
+    if (error) {
+      return (
+        <ErrorDisplay
+          status={this.state.error.status}
+          msg={this.state.error.msg}
+        />
+      );
+    }
     return this.state.isLoading ? (
-      <p>Loading....</p>
+      <Loader />
     ) : (
       <ul className="comment-list">
-        {this.state.comments.map((comment) => {
+        {comments.map((comment) => {
           return (
             <li key={comment.comment_id} className="comment-list-item">
               <h3>

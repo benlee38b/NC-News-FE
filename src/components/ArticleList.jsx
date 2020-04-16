@@ -4,12 +4,14 @@ import { Link } from '@reach/router';
 import Voter from './Voter';
 import FilterArticleListForm from './FilterArticleListForm';
 import { ErrorDisplay } from './ErrorDisplay';
+import { Loader } from './Loader';
 
 export class ArticleList extends Component {
   state = {
     articles: [],
     isLoading: true,
     queryObj: {},
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,6 +28,7 @@ export class ArticleList extends Component {
         />
       );
     }
+    if (this.state.isLoading) return <Loader />;
     const { articles } = this.state;
     return (
       <main>
