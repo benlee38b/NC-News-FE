@@ -53,13 +53,16 @@ export class NavBar extends Component {
                 key={topic.slug + index}
                 className="nav-links"
               >
-                <li>{topic.slug}</li>
+                <li>{topic.slug[0].toUpperCase() + topic.slug.slice(1)}</li>
               </Link>
             );
           })}
           <Link to="/articles" className="nav-links">
             <li>All Articles</li>
           </Link>
+          <li id="logged-in-user">
+            Logged in as: <strong>{this.props.user}</strong>
+          </li>
         </ul>
       </nav>
     );

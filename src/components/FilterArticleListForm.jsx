@@ -7,7 +7,7 @@ export class FilterArticleListForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="filter-form">
         <label htmlFor="sort-by">Sort articles by:</label>
         <select name="sort_by" id="sort-by" onChange={this.handleChange}>
           <option value="">-</option>
@@ -41,7 +41,7 @@ export class FilterArticleListForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.handleFilteredArticles(this.state.query);
+    this.props.fetchArticles(this.state.query);
   };
 }
 

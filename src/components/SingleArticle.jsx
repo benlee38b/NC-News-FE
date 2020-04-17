@@ -3,9 +3,9 @@ import * as api from '../utils/api';
 import Voter from './Voter';
 import CommentsList from './CommentsList';
 import { ErrorDisplay } from './ErrorDisplay';
+import { formatDate } from '../utils/formatDate';
 
 import { Loader } from './Loader';
-// import { formatDate } from '../utils/formatDate';
 
 export class SingleArticle extends Component {
   state = {
@@ -23,6 +23,8 @@ export class SingleArticle extends Component {
       api
         .getArticleById(this.props.article_id)
         .then((article) => {
+          article.created_at = formatDate(article.created_at);
+
           this.setState({ article, isLoading: false, homepage: false });
         })
         .catch((err) => {
@@ -86,14 +88,14 @@ export class SingleArticle extends Component {
           {this.state.homepage ? (
             <h2>Please enjoy this random article</h2>
           ) : null}
-          <h2>{title}</h2>
-          <h4>
+          <h2 className="single-article-heading">{title}</h2>
+          <h5 className="single-article-subheading">
             written by{author} on {created_at}
-          </h4>
+          </h5>
           <h5>
             <Voter votes={votes} type={'articles'} article_id={article_id} />
           </h5>
-          <p>{body}</p>
+          <p className="single-article-body">{body}</p>
         </main>
         <section className="comments-container">
           <CommentsList article_id={article_id} user={this.props.user} />

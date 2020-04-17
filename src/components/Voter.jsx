@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import * as api from '../utils/api';
 
 export class Voter extends Component {
-  state = { voteChange: 0 };
+  state = { voteChange: 0, error: null };
 
   render() {
+    const { type } = this.props;
     const { voteChange } = this.state;
     return (
       <section className="voter">
@@ -15,9 +16,15 @@ export class Voter extends Component {
           }}
           disabled={voteChange > 0}
         >
-          <i id="up-voting-icon" className="far fa-arrow-alt-circle-up"></i>
+          <i
+            id={type === 'articles' ? 'up-voting-icon' : 'comment-voter-up'}
+            className="far fa-arrow-alt-circle-up"
+          ></i>
         </button>
-        <p>Total votes: {this.props.votes + voteChange}</p>
+        <p>
+          <span className="total-votes-title">Total votes:</span>
+          <strong>{this.props.votes + voteChange}</strong>
+        </p>
         <button
           id="down-voting-button"
           onClick={() => {
@@ -25,16 +32,28 @@ export class Voter extends Component {
           }}
           disabled={voteChange < 0}
         >
-          <i id="down-voting-icon" className="far fa-arrow-alt-circle-down"></i>
+          <i
+            id={type === 'articles' ? 'down-voting-icon' : 'comment-voter-down'}
+            className="far fa-arrow-alt-circle-down"
+          ></i>
         </button>
       </section>
     );
   }
 
-  handleClick = (votes) => {
-    api.patchVotes(this.props, votes);
+  handleClick = (newVotes) => {
+    api.patchVotes(this.props, newVotes).catch((err) => {
+      console.dir(err);
+      this.setState({
+        error: {
+          status: err.response.status,
+          msg: err.response.data.message,
+        },
+        isLoading: false,
+      });
+    });
     this.setState((currentState) => {
-      return { voteChange: currentState.voteChange + votes };
+      return { voteChange: currentState.voteChange + newVotes };
     });
   };
 }

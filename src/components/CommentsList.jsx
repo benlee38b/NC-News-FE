@@ -4,6 +4,7 @@ import Voter from './Voter';
 import { Loader } from './Loader';
 import { ErrorDisplay } from './ErrorDisplay';
 import AddCommentForm from './AddCommentForm';
+import { formatDate } from '../utils/formatDate';
 
 export class CommentsList extends Component {
   state = {
@@ -20,6 +21,11 @@ export class CommentsList extends Component {
     api
       .getCommentsByArticleId(this.props.article_id)
       .then((comments) => {
+        if (comments.length > 1) {
+          comments.forEach((comment) => {
+            comment.created_at = formatDate(comment.created_at);
+          });
+        }
         this.setState({ comments, isLoading: false });
       })
       .catch((err) => {

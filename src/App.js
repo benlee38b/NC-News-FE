@@ -19,7 +19,7 @@ export class App extends Component {
       <div className="App">
         <Header />
 
-        <NavBar />
+        <NavBar user={this.state.user} />
         <Router>
           <ArticleList path="/topics/:topic_slug" />
           <ErrorDisplay default status={404} msg={'page not found'} />

@@ -12,10 +12,12 @@ export class AddCommentForm extends Component {
         <label htmlFor="new-comment">
           Add a new comment:
           <textarea
+            value={this.state.body}
             id="new-comment"
-            rows="4"
-            cols="50"
+            rows="5"
+            cols="60"
             onChange={this.handleChange}
+            required
           />
         </label>
         <button type="submit">Post</button>
@@ -32,6 +34,7 @@ export class AddCommentForm extends Component {
     api
       .postCommentByArticleId(this.props, this.state.body)
       .then(() => {
+        this.setState({ body: '' });
         this.props.fetchComments();
       })
       .catch((err) => {
