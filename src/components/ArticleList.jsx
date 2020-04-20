@@ -7,17 +7,19 @@ import { ErrorDisplay } from './ErrorDisplay';
 import { Loader } from './Loader';
 import { formatDate } from '../utils/formatDate';
 import { Pages } from './Pages';
+import moment from 'moment';
 
 export class ArticleList extends Component {
   state = {
     articles: [],
     isLoading: true,
     error: null,
-    pages: 0,
+    pages: [],
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.topic !== this.props.topic) {
+    if (prevProps.topic_slug !== this.props.topic_slug) {
+      console.log('fetching!!');
       this.fetchArticles();
     }
   }
@@ -36,10 +38,7 @@ export class ArticleList extends Component {
     return (
       <>
         <main>
-          <h2 className="topic-title">
-            {topic_slug[0].toUpperCase() + topic_slug.slice(1) ||
-              'All Articles'}
-          </h2>
+          <h2 className="topic-title">{topic_slug || 'All Articles'}</h2>
           <FilterArticleListForm fetchArticles={this.fetchArticles} />
           <ul className="articles-list">
             {articles.map((article) => {
@@ -49,11 +48,14 @@ export class ArticleList extends Component {
                   key={article.article_id}
                 >
                   <Link to={`/articles/${article.article_id}`}>
-                    <li>
-                      <h3>{article.title}</h3>
-                      <h4>Written By {article.author}</h4>
-                      <h5>Published on {article.created_at}</h5>
-                      <h5>Comment count: {article.comment_count}</h5>
+                    <li className="article-grid">
+                      <h3 id="article-card-title">{article.title}</h3>
+                      <h4>By {article.author}</h4>
+                      <h5>Published {article.created_at}</h5>
+                      <h5 id="comment-count">
+                        <i class="fas fa-comments"></i>
+                        Total Comments {article.comment_count}
+                      </h5>
                     </li>
                   </Link>
 
@@ -81,18 +83,30 @@ export class ArticleList extends Component {
         if (articles.length > 1) {
           articles.forEach((article) => {
             if (article.created_at) {
-              article.created_at = formatDate(article.created_at);
+              article.created_at = moment(
+                formatDate(article.created_at),
+                'YYYY-MM-DD'
+              ).fromNow();
             }
           });
         }
-        let pageCount = Math.ceil(articles[0].total_count / 10);
-        let pageArr = [];
-        for (let i = 1; i <= pageCount; i++) {
-          pageArr.push(i);
-        }
-        console.log(pageArr);
 
-        this.setState({ articles, isLoading: false, pages: pageArr });
+        let pageCount = Math.ceil(articles[0].total_count / 10);
+
+        let pageArr = [];
+        if (pageCount) {
+          for (let i = 1; i <= pageCount; i++) {
+            pageArr.push(i);
+          }
+        }
+
+        this.setState((currentState) => {
+          return {
+            articles,
+            isLoading: false,
+            pages: pageArr.length ? pageArr : currentState.pages,
+          };
+        });
       })
       .catch((err) => {
         console.dir(err);

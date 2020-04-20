@@ -8,10 +8,14 @@ export const Pages = (props) => {
   };
 
   return (
-    <ul className="pages">
+    <ul className="page-list">
       {props.pages.map((page, index) => {
         return (
-          <li key={page + index} onClick={() => handleClick(page)}>
+          <li
+            className="pages"
+            key={page + index}
+            onClick={() => handleClick(page)}
+          >
             {page}
           </li>
         );

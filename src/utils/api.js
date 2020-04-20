@@ -23,8 +23,8 @@ export const getArticles = (query) => {
       },
     })
     .then(({ data }) => {
-      console.log(data.articles);
-
+      console.log(data);
+      // { articles: [], total_count: 42 }
       // data.articles.created_at = formatDate(data.articles.created_at);
       return data.articles;
     });
