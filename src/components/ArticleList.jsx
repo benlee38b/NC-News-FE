@@ -53,7 +53,7 @@ export class ArticleList extends Component {
                       <h4>By {article.author}</h4>
                       <h5>Published {article.created_at}</h5>
                       <h5 id="comment-count">
-                        <i class="fas fa-comments"></i>
+                        <i className="fas fa-comments"></i>
                         Total Comments {article.comment_count}
                       </h5>
                     </li>
@@ -69,13 +69,16 @@ export class ArticleList extends Component {
             })}
           </ul>
         </main>
-        <Pages pages={this.state.pages} fetchArticles={this.fetchArticles} />
+        <Pages
+          pages={this.state.pages}
+          fetchArticles={this.fetchArticles}
+          type={'articles'}
+        />
       </>
     );
   }
 
   fetchArticles = (query) => {
-    console.log(query);
     const { topic_slug } = this.props;
     api
       .getArticles({ topic: topic_slug, ...query })

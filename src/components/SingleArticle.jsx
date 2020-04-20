@@ -29,7 +29,7 @@ export class SingleArticle extends Component {
         })
         .catch((err) => {
           console.dir(err);
-          console.log(err.response.data.message);
+
           this.setState({
             error: {
               status: err.response.status,

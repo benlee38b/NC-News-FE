@@ -5,28 +5,49 @@ import { Loader } from './Loader';
 import { ErrorDisplay } from './ErrorDisplay';
 import AddCommentForm from './AddCommentForm';
 import { formatDate } from '../utils/formatDate';
+import { moment } from 'moment';
+import { Pages } from './Pages';
 
 export class CommentsList extends Component {
   state = {
     comments: [],
     isLoading: true,
     error: null,
+    pages: [],
   };
 
   componentDidMount() {
     this.fetchComments();
   }
 
-  fetchComments = () => {
+  fetchComments = (page) => {
     api
-      .getCommentsByArticleId(this.props.article_id)
+      .getCommentsByArticleId(this.props.article_id, page)
       .then((comments) => {
         if (comments.length > 1) {
           comments.forEach((comment) => {
-            comment.created_at = formatDate(comment.created_at);
+            if (comment.created_at) {
+              comment.created_at = formatDate(comment.created_at);
+            }
           });
         }
-        this.setState({ comments, isLoading: false });
+        let pageCount = Math.ceil(comments[0].total_count / 10);
+
+        let pageArr = [];
+
+        if (pageCount) {
+          for (let i = 1; i <= pageCount; i++) {
+            pageArr.push(i);
+          }
+        }
+
+        this.setState((currentState) => {
+          return {
+            comments,
+            pages: pageArr.length ? pageArr : currentState.pages,
+            isLoading: false,
+          };
+        });
       })
       .catch((err) => {
         console.dir(err);
@@ -82,6 +103,11 @@ export class CommentsList extends Component {
             );
           })}
         </ul>
+        <Pages
+          pages={this.state.pages}
+          fetchComments={this.fetchComments}
+          type={'comments'}
+        />
       </>
     );
   }

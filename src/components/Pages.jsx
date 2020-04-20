@@ -4,7 +4,11 @@ export const Pages = (props) => {
   console.log(props);
 
   const handleClick = (page) => {
-    props.fetchArticles({ p: page });
+    if (props.type === 'articles') {
+      props.fetchArticles({ p: page });
+    } else {
+      props.fetchComments(page);
+    }
   };
 
   return (

@@ -28,15 +28,10 @@ export class FilterArticleListForm extends Component {
   handleChange = (event) => {
     let queryObj = {};
     queryObj[event.target.name] = event.target.value;
-    console.log(event.target.name);
-    this.setState(
-      (currentState) => {
-        return { query: { ...currentState.query, ...queryObj } };
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+
+    this.setState((currentState) => {
+      return { query: { ...currentState.query, ...queryObj } };
+    });
   };
 
   handleSubmit = (event) => {
