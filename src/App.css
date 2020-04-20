@@ -8,6 +8,7 @@ html {
 
 header {
   font-size: 2.5vw;
+  color: #203947;
 }
 ul {
   padding: 0px;
@@ -20,6 +21,7 @@ ul {
 
 .topic-title {
   font-size: 6vw;
+  color: #203947;
 }
 
 a:-webkit-any-link {
@@ -57,9 +59,7 @@ a:-webkit-any-link:hover {
 .articles-list-item {
   border-radius: 3%;
   background-color: #a3c9a8;
-
   padding: 5px;
-
   grid-auto-flow: dense;
 }
 
@@ -74,7 +74,7 @@ a:-webkit-any-link:hover {
 #article-card-title {
   grid-column: span 2;
   text-decoration: underline;
-  font-size: 25px;
+  font-size: 33px;
 }
 
 #comment-count {
@@ -124,7 +124,7 @@ a:-webkit-any-link:hover {
   background-color: none;
 }
 #up-voting-button {
-  font-size: 4vw;
+  font-size: 30px;
   border-radius: 100%;
   border: none;
   background-color: transparent;
@@ -133,21 +133,25 @@ a:-webkit-any-link:hover {
 }
 
 #up-voting-icon {
-  font-size: 4vw;
+  font-size: 30px;
   background-color: green;
   border-radius: 100%;
 }
 #down-voting-button {
-  font-size: 4vw;
+  font-size: 30px;
   border-radius: 100%;
   border: none;
   background-color: transparent;
   margin-left: 5px;
   border-radius: 100%;
 }
+/* #down-voting-button,
+#down-voting-icon,
+#up-voting-icon,
+#up-voting-button  */
 
 #down-voting-icon {
-  font-size: 4vw;
+  font-size: 30px;
   background-color: red;
   border-radius: 100%;
 }

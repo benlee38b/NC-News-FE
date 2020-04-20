@@ -11,7 +11,7 @@
     "axios": "^0.19.2",
     "g": "^2.0.1",
     "moment": "^2.24.0",
-    "netlify-cli": "^2.46.0",
+    "netlify-cli": "^2.47.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",

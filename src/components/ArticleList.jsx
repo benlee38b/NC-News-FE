@@ -38,7 +38,10 @@ export class ArticleList extends Component {
     return (
       <>
         <main>
-          <h2 className="topic-title">{topic_slug || 'All Articles'}</h2>
+          <h2 className="topic-title">
+            {topic_slug[0].toUpperCase() + topic_slug.slice(1) ||
+              'All Articles'}
+          </h2>
           <FilterArticleListForm fetchArticles={this.fetchArticles} />
           <ul className="articles-list">
             {articles.map((article) => {

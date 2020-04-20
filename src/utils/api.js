@@ -43,11 +43,11 @@ export const patchVotes = (props, votes) => {
     });
 };
 
-export const getCommentsByArticleId = (article_id, page) => {
+export const getCommentsByArticleId = (query) => {
   return request
-    .get(`articles/${article_id}/comments`, {
+    .get(`articles/${query.article_id}/comments`, {
       params: {
-        p: page,
+        p: query.page,
       },
     })
     .then(({ data }) => {

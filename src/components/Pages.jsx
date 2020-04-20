@@ -1,8 +1,6 @@
 import React from 'react';
 
 export const Pages = (props) => {
-  console.log(props);
-
   const handleClick = (page) => {
     if (props.type === 'articles') {
       props.fetchArticles({ p: page });

@@ -5,7 +5,7 @@ import { Loader } from './Loader';
 import { ErrorDisplay } from './ErrorDisplay';
 import AddCommentForm from './AddCommentForm';
 import { formatDate } from '../utils/formatDate';
-import { moment } from 'moment';
+import moment from 'moment';
 import { Pages } from './Pages';
 
 export class CommentsList extends Component {
@@ -22,12 +22,18 @@ export class CommentsList extends Component {
 
   fetchComments = (page) => {
     api
-      .getCommentsByArticleId(this.props.article_id, page)
+      .getCommentsByArticleId({
+        article_id: this.props.article_id,
+        page: page || 1,
+      })
       .then((comments) => {
         if (comments.length > 1) {
           comments.forEach((comment) => {
             if (comment.created_at) {
-              comment.created_at = formatDate(comment.created_at);
+              comment.created_at = moment(
+                formatDate(comment.created_at),
+                'YYYY-MM-DD'
+              ).fromNow();
             }
           });
         }
@@ -85,9 +91,9 @@ export class CommentsList extends Component {
             return (
               <li key={comment.comment_id} className="comment-list-item">
                 <h3>
-                  <span>{comment.author} on </span>
-                  {comment.created_at}
+                  <span>{comment.author} </span>
                 </h3>
+                <p>Posted {comment.created_at}</p>
                 {this.props.user === comment.author ? (
                   <button onClick={() => this.handleDelete(comment.comment_id)}>
                     Delete Comment
@@ -116,7 +122,7 @@ export class CommentsList extends Component {
     api
       .deleteCommentByCommentId(comment_id)
       .then(() => {
-        this.fetchComments(this.props.article_id);
+        this.fetchComments();
       })
       .catch((err) => {
         console.dir(err);
