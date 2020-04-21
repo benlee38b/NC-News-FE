@@ -4,6 +4,7 @@ import Voter from './Voter';
 import CommentsList from './CommentsList';
 import { ErrorDisplay } from './ErrorDisplay';
 import { formatDate } from '../utils/formatDate';
+import moment from 'moment';
 
 import { Loader } from './Loader';
 
@@ -23,7 +24,10 @@ export class SingleArticle extends Component {
       api
         .getArticleById(this.props.article_id)
         .then((article) => {
-          article.created_at = formatDate(article.created_at);
+          article.created_at = moment(
+            formatDate(article.created_at),
+            'YYYY-MM-DD'
+          ).fromNow();
 
           this.setState({ article, isLoading: false, homepage: false });
         })
@@ -43,8 +47,13 @@ export class SingleArticle extends Component {
         .getArticles({})
         .then((articles) => {
           const arrLength = articles.length;
+          let randomArticle = articles[Math.floor(Math.random() * arrLength)];
+          randomArticle.created_at = moment(
+            formatDate(randomArticle.created_at),
+            'YYYY-MM-DD'
+          ).fromNow();
           this.setState({
-            article: articles[Math.floor(Math.random() * arrLength)],
+            article: randomArticle,
             homepage: true,
             isLoading: false,
           });
@@ -77,28 +86,29 @@ export class SingleArticle extends Component {
       created_at,
       votes,
       article_id,
-      // comment_count,
+      comment_count,
     } = this.state.article;
-    // isLoading
+
     return this.state.isLoading ? (
       <Loader />
     ) : (
       <>
+        {this.state.homepage ? <h2>Please enjoy this random article</h2> : null}
         <main className="single-article-container">
-          {this.state.homepage ? (
-            <h2>Please enjoy this random article</h2>
-          ) : null}
           <h2 className="single-article-heading">{title}</h2>
-          <h5 className="single-article-subheading">
-            written by{author} on {created_at}
-          </h5>
-          <h5>
+          <h4 className="single-article-subheading">written by {author}</h4>
+          <p className="date-of-release"> Published {created_at}</p>
+          <h5 className="single-article-voter">
             <Voter votes={votes} type={'articles'} article_id={article_id} />
           </h5>
           <p className="single-article-body">{body}</p>
         </main>
         <section className="comments-container">
-          <CommentsList article_id={article_id} user={this.props.user} />
+          <CommentsList
+            article_id={article_id}
+            user={this.props.user}
+            total_comments={comment_count}
+          />
         </section>
       </>
     );

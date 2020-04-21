@@ -20,7 +20,9 @@ export class AddCommentForm extends Component {
             required
           />
         </label>
-        <button type="submit">Post</button>
+        <button type="submit" id="comment-submit">
+          Post
+        </button>
       </form>
     );
   }

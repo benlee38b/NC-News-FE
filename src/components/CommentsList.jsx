@@ -24,7 +24,7 @@ export class CommentsList extends Component {
     api
       .getCommentsByArticleId({
         article_id: this.props.article_id,
-        page: page || 1,
+        page: page || null,
       })
       .then((comments) => {
         if (comments.length > 1) {
@@ -37,6 +37,7 @@ export class CommentsList extends Component {
             }
           });
         }
+
         let pageCount = Math.ceil(comments[0].total_count / 10);
 
         let pageArr = [];
@@ -81,11 +82,18 @@ export class CommentsList extends Component {
       <Loader />
     ) : (
       <>
+        <Pages
+          pages={this.state.pages}
+          fetchComments={this.fetchComments}
+          type={'comments'}
+        />
+
         <AddCommentForm
           article_id={this.props.article_id}
           user={this.props.user}
           fetchComments={this.fetchComments}
         />
+        <h2>Total Comments: {this.props.total_comments}</h2>
         <ul className="comment-list">
           {comments.map((comment) => {
             return (
@@ -109,11 +117,6 @@ export class CommentsList extends Component {
             );
           })}
         </ul>
-        <Pages
-          pages={this.state.pages}
-          fetchComments={this.fetchComments}
-          type={'comments'}
-        />
       </>
     );
   }
